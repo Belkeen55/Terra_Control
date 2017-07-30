@@ -5,7 +5,19 @@ Installation de Terra_Control
 		Expand SD card 
 		Internationalisation 
 		HostName Terra_Control 
-		Activation SSH
+		Activation SSH 
+		
+#### Configuration réseau
+	sudo nano /etc/network/interfaces 
+	auto lo 
+	iface lo inet loopback 
+	auto eth0 
+	iface eth0 inet dhcp 
+    allow-hotplug wlan0 
+	auto wlan0 
+	iface wlan0 inet dhcp 
+	wpa-ssid "" 
+	wpa-psk "" 
 
 #### Mise à jour du systeme 
 	sudo apt update 
@@ -31,6 +43,7 @@ Installation de Terra_Control
 	sudo apt install php5 
 	sudo apt install mysql-server php5-mysql 
 	sudo apt install phpmyadmin 
+	sudo apt-get install python-dev 
 
 #### Creation Key SSH 
 	ssh-keygen -t rsa -b 4096 -C "adresse_mail" 
@@ -45,18 +58,6 @@ Installation de Terra_Control
 	cd /var/www/html/
 	git init
 	sudo git remote add hub git@github.com:Belkeen55/"deposit".git 
-
-#### Configuration réseau
-	sudo nano /etc/network/interfaces 
-	auto lo 
-	iface lo inet loopback 
-	auto eth0 
-	iface eth0 inet dhcp 
-    allow-hotplug wlan0 
-	auto wlan0 
-	iface wlan0 inet dhcp 
-	wpa-ssid "" 
-	wpa-psk "" 
 	
 #### Installation outils de clonage
 	git clone https://github.com/billw2/rpi-clone.git 
@@ -65,13 +66,19 @@ Installation de Terra_Control
 	sudo blkid 
 	sudo rpi-clone "sdX" 
 	
+#### Installation Codiad
+	cd /var/www/html/ 
+	sudo git clone https://github.com/Codiad/Codiad /var/www/html/ 
+	sudo chown -R www-data:"utilisateur" /var/www 
+	sudo chmod -R 770 /var/www/html 
+	
 #### Installation driver/soft DHT 22
 	cd /var/www/html/ 
 	git clone https://github.com/adafruit/Adafruit_Python_DHT.git  
 	cd Adafruit_Python_DHT 
 	sudo python setup.py install 
 	cd examples 
-	sudo ./AdafruitDHT.py 22 4 
+	sudo ./AdafruitDHT.py 22 17 
 	4 étant le GPIO de donnée 
 
 #### mise en place des Cron	
